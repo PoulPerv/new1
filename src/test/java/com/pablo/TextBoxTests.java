@@ -21,15 +21,27 @@ public class TextBoxTests {
     }
     @Test
     void fillFormTest(){
-        open("/text-box");
+        open("/automation-practice-form");
 
-        String name = "Pablo Black";
-        $("[id=userName]").setValue(name);
-        $("[id=userEmail]").setValue("Pablo@gmail.com");
-        $("[id=currentAddress]").setValue("Street");
-        $("[id=permanentAddress]").setValue("House");
-        $("[id=submit]").click();
-        $("[id=output]").shouldHave(text(name), text("Pablo@gmail.com"), text("Street"), text("House"));
+        String name = "Pablo";
+        String lastName = "Black";
+        String email = "Pablo@gmail.com";
+        String gender = "Male";
+        String mobile = "375297563421";
+        String hobby = "Music";
+        String subject = "English";
+        String imgPath = "img/x_aca7686e.jpg";
+        String currentAddress = "Minsk";
+        String state = "NCR";
+        String city = "Delhi";
+
+        $("[id=firstName]").setValue(name);
+        $("[id=lastName]").setValue(lastName);
+        $("[id=userEmail]").setValue(email);
+        $("[id=userNumber]").setValue(mobile);
+        $("[id=currentAddress]").setValue(currentAddress);
+        $("[id=subjectsInput]").setValue(subject).pressEnter();
+        $("[id=genterWrapper]").$(byText(gender)).click();
     }
 }
 
