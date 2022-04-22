@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -28,14 +30,17 @@ public class TextBoxTests {
         String lastName = "Black";
         String email = "Pablo@gmail.com";
         String gender = "Male";
-        String mobile = "375297563421";
-        String hobby = "Sport";
+        String mobile = "0297563421";
+        String hobby = "Sports";
         String subject = "English";
-        String imgPath = "src/test/resources/x_aca7686e.jpg";
+        String img = "src/test/resources/cv.jpg";
+        File sis = new File(img);
         String currentAddress = "Minsk";
         String state = "NCR";
         String city = "Delhi";
-        String birth = "Delhi";
+        String day = "15";
+        String year = "1987";
+        String month = "May";
 
 
         $("[id=firstName]").setValue(name);
@@ -48,8 +53,25 @@ public class TextBoxTests {
         $("[id=hobbiesWrapper]").$(withText(hobby)).click();
         $("[id=state]").click(); $("[id=state]").$(byText(state)).click();
         $("[id=city]").click(); $("[id=city]").$(byText(city)).click();
-        $("#uploadPicture").uploadFromClasspath(imgPath);
-        //$("[id=submit]").click();
+        $("#uploadPicture").uploadFile(sis);
+        $("[id=dateOfBirthInput]").click();
+        $(".react-datepicker__month-select").selectOption(month);
+        $(".react-datepicker__year-select").selectOption(year);
+        $(".react-datepicker__month").$(byText(day)).click();
+        $("[id=submit]").click();
+
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".modal-body").shouldHave(text(name + " " + lastName),
+                text(email),
+                text(gender),
+                text(mobile),
+                text(day + " " + month + "," + year),
+                text(subject),
+                text(hobby),
+                text(img.substring(19)),
+                text(currentAddress),
+                text(state + " " + city)
+        );
     }
 }
 
