@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.withText;
 //import static com.codeborne.selenide.Selectors.byXpath; //если понадобится скролл
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -28,12 +29,14 @@ public class TextBoxTests {
         String email = "Pablo@gmail.com";
         String gender = "Male";
         String mobile = "375297563421";
-        String hobby = "Music";
+        String hobby = "Sport";
         String subject = "English";
-        String imgPath = "img/x_aca7686e.jpg";
+        String imgPath = "src/test/resources/x_aca7686e.jpg";
         String currentAddress = "Minsk";
         String state = "NCR";
         String city = "Delhi";
+        String birth = "Delhi";
+
 
         $("[id=firstName]").setValue(name);
         $("[id=lastName]").setValue(lastName);
@@ -42,6 +45,11 @@ public class TextBoxTests {
         $("[id=currentAddress]").setValue(currentAddress);
         $("[id=subjectsInput]").setValue(subject).pressEnter();
         $("[id=genterWrapper]").$(byText(gender)).click();
+        $("[id=hobbiesWrapper]").$(withText(hobby)).click();
+        $("[id=state]").click(); $("[id=state]").$(byText(state)).click();
+        $("[id=city]").click(); $("[id=city]").$(byText(city)).click();
+        $("#uploadPicture").uploadFromClasspath(imgPath);
+        //$("[id=submit]").click();
     }
 }
 
