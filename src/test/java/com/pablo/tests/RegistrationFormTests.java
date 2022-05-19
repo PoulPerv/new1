@@ -6,9 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
+import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 
 @Tag("demoqa")
@@ -38,33 +37,37 @@ public class RegistrationFormTests extends TestBase {
     @Test
     @DisplayName("Successful fill registration test")
     void fillFormTest() {
+        step("Open registration form", () -> {
+                    registrationFormPage.openPage();
+                });
+        step("Fill registration form", () -> {
+            registrationFormPage
+                    .setFirstName(name)
+                    .setLastName(lastName)
+                    .setEmail(email)
+                    .setBirthDate(date)
+                    .setGender(gender)
+                    .setPhoneNumber(mobile)
+                    .setAddress(currentAddress)
+                    .setSubject(subject)
+                    .setHobby(hobby)
+                    .setStateAndCity(state, city)
+                    .uploadPicture(img)
+                    .submitForm();
+        });
+        step("Verify form data", () -> {
+            registrationFormPage.checkResult("Student Name", expectedFullName)
+                    .checkResult("Student Email", email)
+                    .checkResult("Gender", gender)
+                    .checkResult("Mobile", mobile)
+                    .checkResult("Date of Birth", expectedDate)
+                    .checkResult("Subjects", subject)
+                    .checkResult("Hobbies", hobby)
+                    .checkResult("Picture", img)
+                    .checkResult("Address", currentAddress)
+                    .checkResult("State and City", expectedStateCity);
 
-        registrationFormPage.openPage()
-                .setFirstName(name)
-                .setLastName(lastName)
-                .setEmail(email)
-                .setBirthDate(date)
-                .setGender(gender)
-                .setPhoneNumber(mobile)
-                .setAddress(currentAddress)
-                .setSubject(subject)
-                .setHobby(hobby)
-                .setStateAndCity(state, city)
-                .uploadPicture(img)
-                .submitForm();
-
-
-        registrationFormPage.checkResult("Student Name", expectedFullName)
-                .checkResult("Student Email", email)
-                .checkResult("Gender", gender)
-                .checkResult("Mobile", mobile)
-                .checkResult("Date of Birth", expectedDate)
-                .checkResult("Subjects", subject)
-                .checkResult("Hobbies", hobby)
-                .checkResult("Picture", img)
-                .checkResult("Address", currentAddress)
-                .checkResult("State and City", expectedStateCity);
-
+        });
     }
 }
 
