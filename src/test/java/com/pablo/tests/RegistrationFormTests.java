@@ -1,17 +1,18 @@
 package com.pablo.tests;
 
-import com.codeborne.selenide.Configuration;
 import com.pablo.data.Generator;
 import com.pablo.pages.RegistrationFormPage;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 import static java.lang.String.format;
 
-public class RegistrationFormTests {
+@Tag("demoqa")
+public class RegistrationFormTests extends TestBase {
 
     Generator gen = new Generator();
     String name = gen.getFirstName(),
@@ -33,14 +34,9 @@ public class RegistrationFormTests {
 
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.holdBrowserOpen = true;
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
 
     @Test
+    @DisplayName("Successful fill registration test")
     void fillFormTest() {
 
         registrationFormPage.openPage()
